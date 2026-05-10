@@ -1,38 +1,6 @@
 // frontend/src/components/Globe/flightLayer.js
 
-/*
-|--------------------------------------------------------------------------
-| FILTER FLIGHTS
-|--------------------------------------------------------------------------
-*/
-
-export function getVisibleFlights(
-  flights,
-  zoomLevel
-) {
-  if (!Array.isArray(flights))
-    return []
-
-  let limit = 2500
-
-  if (zoomLevel < 1)
-    limit = 4000
-  else if (zoomLevel < 1.5)
-    limit = 2500
-  else if (zoomLevel < 2)
-    limit = 1400
-  else limit = 700
-
-  return flights
-    .filter(
-      (f) =>
-        typeof f.latitude ===
-          'number' &&
-        typeof f.longitude ===
-          'number'
-    )
-    .slice(0, limit)
-}
+const flightTrails = new Map()
 
 /*
 |--------------------------------------------------------------------------
@@ -43,33 +11,51 @@ export function getVisibleFlights(
 export function createFlightObject(
   flight
 ) {
+
+  if (!flight)
+    return null
+
+  const lat =
+    flight.latitude ??
+    flight.lat
+
+  const lng =
+    flight.longitude ??
+    flight.lng
+
+  if (
+    typeof lat !== 'number' ||
+    typeof lng !== 'number'
+  ) {
+    return null
+  }
+
   return {
-    ...flight,
-
-    lat: Number(
-      flight.latitude
-    ),
-
-    lng: Number(
-      flight.longitude
-    ),
-
-    altitude:
-      flight.baro_altitude || 0,
-
-    speed:
-      Math.round(
-        flight.velocity || 0
-      ),
-
-    heading:
-      Math.round(
-        flight.true_track || 0
-      ),
+    id:
+      flight.icao24 ||
+      Math.random(),
 
     callsign:
       flight.callsign?.trim() ||
       'UNKNOWN',
+
+    lat,
+    lng,
+
+    altitude:
+      flight.baro_altitude ||
+      flight.altitude ||
+      0,
+
+    speed:
+      flight.velocity ||
+      flight.speed ||
+      0,
+
+    heading:
+      flight.true_track ||
+      flight.heading ||
+      0,
 
     country:
       flight.origin_country ||
@@ -77,116 +63,129 @@ export function createFlightObject(
 
     departure:
       flight.estDepartureAirport ||
-      'N/A',
+      'Unknown',
 
     arrival:
       flight.estArrivalAirport ||
-      'N/A',
+      'Unknown',
   }
 }
 
 /*
 |--------------------------------------------------------------------------
-| HOVER LABEL
+| GET VISIBLE FLIGHTS
 |--------------------------------------------------------------------------
 */
 
-export function createFlightLabel(
-  flight
+export function getVisibleFlights(
+  flights = [],
+  zoomLevel = 2
 ) {
-  return `
-    <div style="
-      background: rgba(0,0,0,0.94);
-      border: 1px solid rgba(0,255,255,0.4);
-      border-radius: 18px;
-      padding: 14px;
-      color: white;
-      min-width: 240px;
-      backdrop-filter: blur(12px);
-      box-shadow: 0 0 20px rgba(0,255,255,0.2);
-      font-family: sans-serif;
-    ">
 
-      <div style="
-        color:#00ffff;
-        font-size:18px;
-        font-weight:bold;
-        margin-bottom:10px;
-      ">
-        ✈ ${flight.callsign}
-      </div>
+  if (!Array.isArray(flights))
+    return []
 
-      <div style="margin-bottom:6px;">
-        <b>Country:</b>
-        ${flight.country}
-      </div>
+  return flights.filter(
+    (flight) => {
 
-      <div style="margin-bottom:6px;">
-        <b>Speed:</b>
-        ${flight.speed} km/h
-      </div>
+      const lat =
+        flight.latitude ??
+        flight.lat
 
-      <div style="margin-bottom:6px;">
-        <b>Heading:</b>
-        ${flight.heading}°
-      </div>
+      const lng =
+        flight.longitude ??
+        flight.lng
 
-      <div style="
-        margin-top:10px;
-        color:#00ffff;
-        font-weight:bold;
-      ">
-        ${flight.departure}
-        →
-        ${flight.arrival}
-      </div>
-
-    </div>
-  `
+      return (
+        typeof lat ===
+          'number' &&
+        typeof lng ===
+          'number'
+      )
+    }
+  )
 }
 
 /*
 |--------------------------------------------------------------------------
-| AIRCRAFT ICONS
+| UPDATE TRAILS
 |--------------------------------------------------------------------------
 */
 
-export function createAircraftElement(
-  flight,
-  zoomLevel
+export function updateFlightTrail(
+  flight
 ) {
-  // ONLY SHOW ICONS WHEN ZOOMED
 
-  if (zoomLevel > 1.35)
-    return null
+  if (!flight)
+    return
 
-  const el =
-    document.createElement('div')
+  const id =
+    flight.id ||
+    flight.callsign
 
-  el.innerHTML = '✈'
+  if (!id)
+    return
 
-  let size = 16
+  if (
+    !flightTrails.has(id)
+  ) {
+    flightTrails.set(
+      id,
+      []
+    )
+  }
 
-  if (zoomLevel < 0.9)
-    size = 28
-  else if (zoomLevel < 1.1)
-    size = 22
+  const trail =
+    flightTrails.get(id)
 
-  el.style.fontSize =
-    `${size}px`
+  trail.push({
+    lat: flight.lat,
+    lng: flight.lng,
+  })
 
-  el.style.color = '#00ffff'
+  if (trail.length > 8) {
+    trail.shift()
+  }
+}
 
-  el.style.textShadow =
-    '0 0 12px #00ffff'
+/*
+|--------------------------------------------------------------------------
+| GET FLIGHT TRAILS
+|--------------------------------------------------------------------------
+*/
 
-  el.style.pointerEvents =
-    'none'
+export function getFlightTrails() {
 
-  el.style.userSelect = 'none'
+  const arcs = []
 
-  el.style.transform =
-    `rotate(${flight.heading}deg)`
+  flightTrails.forEach(
+    (trail) => {
 
-  return el
+      for (
+        let i = 1;
+        i < trail.length;
+        i++
+      ) {
+
+        arcs.push({
+          startLat:
+            trail[i - 1].lat,
+
+          startLng:
+            trail[i - 1].lng,
+
+          endLat:
+            trail[i].lat,
+
+          endLng:
+            trail[i].lng,
+
+          color:
+            'rgba(0,255,255,0.35)',
+        })
+      }
+    }
+  )
+
+  return arcs
 }

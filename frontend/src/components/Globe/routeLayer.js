@@ -11,7 +11,9 @@ import AIRPORT_DATA from './airportData'
 export function createFlightRoute(
   flight
 ) {
-  if (!flight) return null
+
+  if (!flight)
+    return null
 
   const departure =
     AIRPORT_DATA[
@@ -25,7 +27,7 @@ export function createFlightRoute(
 
   /*
   |--------------------------------------------------------------------------
-  | FALLBACK ROUTE
+  | FALLBACK
   |--------------------------------------------------------------------------
   */
 
@@ -33,14 +35,15 @@ export function createFlightRoute(
     !departure ||
     !arrival
   ) {
-    // create small visible route around aircraft
 
     return {
       startLat:
-        Number(flight.lat) - 2,
+        Number(flight.lat) -
+        2,
 
       startLng:
-        Number(flight.lng) - 2,
+        Number(flight.lng) -
+        2,
 
       endLat:
         Number(flight.lat),
@@ -48,18 +51,8 @@ export function createFlightRoute(
       endLng:
         Number(flight.lng),
 
-      color: '#00ffff',
-
-      callsign:
-        flight.callsign,
-
-      departure:
-        flight.departure ||
-        'Unknown',
-
-      arrival:
-        flight.arrival ||
-        'Unknown',
+      color:
+        '#00ffff',
     }
   }
 
@@ -70,6 +63,7 @@ export function createFlightRoute(
   */
 
   return {
+
     startLat:
       departure.lat,
 
@@ -82,16 +76,8 @@ export function createFlightRoute(
     endLng:
       arrival.lng,
 
-    color: '#00ffff',
-
-    callsign:
-      flight.callsign,
-
-    departure:
-      departure.iata,
-
-    arrival:
-      arrival.iata,
+    color:
+      '#00ffff',
   }
 }
 
@@ -104,6 +90,7 @@ export function createFlightRoute(
 export function createRoutes(
   selectedFlight
 ) {
+
   if (!selectedFlight)
     return []
 
@@ -112,41 +99,8 @@ export function createRoutes(
       selectedFlight
     )
 
-  if (!route) return []
-
-  return [route]
-}
-
-/*
-|--------------------------------------------------------------------------
-| TRAILS
-|--------------------------------------------------------------------------
-*/
-
-export function createTrails(
-  flights
-) {
-  if (!flights?.length)
+  if (!route)
     return []
 
-  return flights.map(
-    (flight) => ({
-      startLat:
-        Number(flight.lat) -
-        0.6,
-
-      startLng:
-        Number(flight.lng) -
-        0.6,
-
-      endLat:
-        Number(flight.lat),
-
-      endLng:
-        Number(flight.lng),
-
-      color:
-        'rgba(0,255,255,0.7)',
-    })
-  )
+  return [route]
 }
