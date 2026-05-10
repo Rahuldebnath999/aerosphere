@@ -394,6 +394,7 @@ export default function CesiumGlobe({
         height: '100vh',
         position: 'relative',
         overflow: 'hidden',
+        touchAction: 'none',
         background:
           'radial-gradient(circle at center, #020817 0%, #000000 70%)',
       }}

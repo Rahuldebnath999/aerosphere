@@ -28,9 +28,12 @@ export default function TrackerPage() {
           'Fetching flights...'
         )
 
+        const API_URL =
+          import.meta.env.VITE_API_URL
+
         const res =
           await axios.get(
-            'http://localhost:3001/api/flights'
+            `${API_URL}/api/flights`
           )
 
         console.log(
@@ -111,6 +114,7 @@ export default function TrackerPage() {
         flightData={flightData}
         onFlightSelect={() => {}}
       />
+
     </div>
   )
 }
