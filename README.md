@@ -1,245 +1,300 @@
-# ✈️ AeroSphere — Real-Time Global Flight Intelligence
+# ✈️ AeroSphere — Real-Time Global Flight Intelligence Platform
 
-> A cinematic, production-grade aviation tracking platform with a 3D globe, live ADS-B flight data, and a futuristic HUD interface.
+> A futuristic real-time aviation tracking platform featuring a cinematic 3D globe, live aircraft intelligence, airport systems, interactive search, and immersive HUD-style UI.
 
-![AeroSphere Preview](https://img.shields.io/badge/Status-Production%20Ready-00D4FF?style=flat-square)
-![Tech Stack](https://img.shields.io/badge/Stack-React%20%7C%20CesiumJS%20%7C%20Node.js-0066FF?style=flat-square)
-![Data Source](https://img.shields.io/badge/Data-OpenSky%20Network-00FFD1?style=flat-square)
-
----
-
-## 🚀 Quick Start
-
-### Prerequisites
-- **Node.js 18+**
-- **npm 9+** or **pnpm**
-- Free [Cesium Ion token](https://cesium.com/ion/signup)
-- Optional: [OpenSky Network account](https://opensky-network.org/) for higher rate limits
+![Status](https://img.shields.io/badge/Status-Live%20Development-00D4FF?style=flat-square)
+![Frontend](https://img.shields.io/badge/Frontend-React%20%7C%20Vite-0066FF?style=flat-square)
+![Backend](https://img.shields.io/badge/Backend-Node.js%20%7C%20Express-00FFD1?style=flat-square)
+![Data](https://img.shields.io/badge/Data-OpenSky%20Network-00FFD1?style=flat-square)
 
 ---
 
-### 1. Clone & Install
+# 🌍 AeroSphere
+
+AeroSphere is a modern aviation visualization platform that displays real-time airborne aircraft on an interactive animated 3D globe.
+
+The platform combines:
+- Live aircraft tracking
+- Real-time flight intelligence
+- Airport visualization
+- Animated route systems
+- Smart aircraft search
+- Interactive flight information panels
+- Cinematic aerospace-inspired UI
+
+---
+
+# 🚀 Features
+
+## 🌎 Interactive Globe
+- Fully interactive 3D Earth
+- Smooth zoom & drag controls
+- Auto rotation system
+- Globe atmosphere rendering
+- Multiple globe themes
+- Night mode Earth
+
+---
+
+## ✈️ Real-Time Flight Tracking
+- Live aircraft rendering
+- Dynamic aircraft updates
+- Aircraft glow effects
+- Flight route visualization
+- Real-time positioning
+- Interactive aircraft selection
+
+---
+
+## 🛬 Airport System
+- Airport markers
+- Airport information panel
+- ICAO & IATA display
+- City & country information
+- Interactive airport focus
+
+---
+
+## 🔎 Smart Flight Search
+- Live aircraft suggestions
+- Search dropdown system
+- Click-to-focus aircraft tracking
+- Instant callsign filtering
+- Route preview in search
+
+---
+
+## 📊 Flight Information Panel
+
+Displays:
+- Callsign
+- ICAO24
+- Airline
+- Aircraft type
+- Speed
+- Heading
+- Altitude
+- Departure airport
+- Arrival airport
+- Origin country
+- Flight status
+- Vertical rate
+
+---
+
+## 🎛️ Globe Controls
+
+Users can toggle:
+- Routes
+- Airports
+- Atmosphere
+- Auto Rotation
+- Flight Glow
+- Globe Themes
+
+---
+
+# 🛰️ Data Source
+
+Flight tracking data is powered by:
+
+## OpenSky Network
+- Real-time ADS-B aircraft states
+- Global aircraft coverage
+- Live telemetry data
+
+---
+
+# 🏗️ Project Architecture
 
 ```bash
-# Clone the repository
-git clone https://github.com/your-org/aerosphere.git
-cd aerosphere
-
-# Install backend dependencies
-cd backend
-npm install
-cp .env.example .env     # then edit .env with your values
-
-# Install frontend dependencies
-cd ../frontend
-npm install
-cp .env.example .env     # then add your VITE_CESIUM_TOKEN
+aerosphere-2/
+│
+├── backend/
+│   ├── node_modules/
+│   ├── src/
+│   │   └── index.js
+│   ├── .env
+│   ├── .env.example
+│   ├── package.json
+│   └── package-lock.json
+│
+├── frontend/
+│   ├── node_modules/
+│   ├── public/
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── Globe/
+│   │   │   │   ├── CesiumGlobe.jsx
+│   │   │   │   ├── flightLayer.js
+│   │   │   │   ├── routeLayer.js
+│   │   │   │   └── airportData.js
+│   │   │   │
+│   │   │   └── TrackerPage.jsx
+│   │   │
+│   │   ├── App.jsx
+│   │   └── main.jsx
+│   │
+│   ├── .env
+│   ├── .env.example
+│   ├── index.html
+│   ├── package.json
+│   ├── package-lock.json
+│   ├── postcss.config.js
+│   ├── tailwind.config.js
+│   └── vite.config.js
+│
+├── .gitignore
+└── README.md
 ```
 
-### 2. Configure Environment
+---
 
-**`backend/.env`**
+# ⚙️ Installation
+
+## Clone Repository
+
+```bash
+git clone https://github.com/your-username/aerosphere-2.git
+cd aerosphere-2
+```
+
+---
+
+# 📦 Backend Setup
+
+```bash
+cd backend
+npm install
+npm start
+```
+
+Backend runs on:
+
+```bash
+http://localhost:3001
+```
+
+---
+
+# 💻 Frontend Setup
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Frontend runs on:
+
+```bash
+http://localhost:5173
+```
+
+---
+
+# 🔑 Environment Variables
+
+## backend/.env
+
 ```env
 PORT=3001
-FRONTEND_URL=http://localhost:5173
-# Optional for higher OpenSky rate limits:
-# OPENSKY_USERNAME=your_username
-# OPENSKY_PASSWORD=your_password
-```
-
-**`frontend/.env`**
-```env
-VITE_API_URL=http://localhost:3001
-VITE_CESIUM_TOKEN=your_cesium_ion_token_here
-```
-
-> **Getting a Cesium Token:** Sign up free at [cesium.com/ion](https://cesium.com/ion/signup) → My Account → Access Tokens → Create New Token. The default token on your account page works fine.
-
-### 3. Run in Development
-
-```bash
-# Terminal 1 — Start backend API server
-cd backend
-npm run dev
-# → API running on http://localhost:3001
-
-# Terminal 2 — Start frontend dev server
-cd frontend
-npm run dev
-# → App running on http://localhost:5173
-```
-
-Open **http://localhost:5173** in your browser. 🎉
-
----
-
-## 🏗️ Architecture
-
-```
-aerosphere/
-├── backend/                    # Node.js + Express API server
-│   ├── src/
-│   │   └── index.js            # Main server with OpenSky proxy + caching
-│   ├── .env.example
-│   └── package.json
-│
-└── frontend/                   # React + Vite SPA
-    ├── public/
-    │   └── favicon.svg
-    ├── src/
-    │   ├── components/
-    │   │   ├── LandingPage/    # Cinematic landing page with starfield + GSAP
-    │   │   │   └── index.jsx
-    │   │   ├── Globe/
-    │   │   │   └── CesiumGlobe.jsx    # Full 3D globe with aircraft entities
-    │   │   ├── FlightPanel/
-    │   │   │   └── index.jsx          # Glassmorphism flight detail panel
-    │   │   ├── SearchBar/
-    │   │   │   └── index.jsx          # Animated flight search + dropdown
-    │   │   ├── HUD/
-    │   │   │   └── index.jsx          # Futuristic HUD overlay + loading screen
-    │   │   ├── LandingPage.jsx        # Barrel export
-    │   │   └── TrackerPage.jsx        # Main tracker view orchestrator
-    │   ├── hooks/
-    │   │   └── useFlightData.js       # Real-time flight polling hook
-    │   ├── utils/
-    │   │   └── flightUtils.js         # Aircraft icons, formatters, helpers
-    │   ├── App.jsx                    # Root component + page transitions
-    │   ├── main.jsx                   # Entry point + GSAP plugin registration
-    │   └── index.css                  # Global styles + design tokens
-    ├── index.html
-    ├── vite.config.js
-    ├── tailwind.config.js
-    └── package.json
 ```
 
 ---
 
-## 🛰️ Data Flow
+# 🛠️ Technologies Used
 
-```
-ADS-B Transponders (1090 MHz)
-         ↓
-OpenSky Ground Receivers (6,000+)
-         ↓
-OpenSky REST API (opensky-network.org)
-         ↓
-AeroSphere Backend (Express proxy + 30s cache)
-         ↓
-Frontend Hook (useFlightData — polls every 30s)
-         ↓
-CesiumGlobe (Cesium.Entity billboards on 3D globe)
-```
+| Category | Technology |
+|----------|------------|
+| Frontend | React + Vite |
+| Globe Engine | react-globe.gl |
+| Backend | Node.js + Express |
+| Flight Data | OpenSky Network |
+| Styling | Glassmorphism UI |
+| Animation | Dynamic Rendering |
 
 ---
 
-## 🌐 API Endpoints
+# 🌌 Globe Themes
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/health` | Service health check |
-| GET | `/api/flights` | All airborne aircraft states |
-| GET | `/api/flights?bbox=lat_min,lon_min,lat_max,lon_max` | Aircraft in bounding box |
-| GET | `/api/flights/:icao24` | Single aircraft by ICAO24 |
-| GET | `/api/stats` | Aggregated traffic statistics |
+Currently available:
+- Default Earth
+- Night Earth
 
----
-
-## 🎨 Design System
-
-| Token | Value | Usage |
-|-------|-------|-------|
-| `--color-void` | `#02060F` | Page background |
-| `--color-space` | `#050D1F` | Card backgrounds |
-| `--color-nebula` | `#091428` | Panel backgrounds |
-| `--color-ion` | `#00D4FF` | Primary accent (cyan) |
-| `--color-plasma` | `#00FFD1` | Secondary accent (teal) |
-| `--color-stellar` | `#0066FF` | Highlight blue |
-| `--color-corona` | `#FF6B35` | Warning / alert orange |
-
-**Typography**
-- Display: `Orbitron` — headings, logo, HUD values
-- Heading: `Exo 2` — section titles, card headers
-- Body: `Rajdhani` — descriptive text
-- Mono: `Fira Code` — data values, coordinates, timestamps
+Planned:
+- Satellite View
+- Dark Matter Theme
+- Terrain Mode
+- Infrared Theme
 
 ---
 
-## ⚡ Performance Notes
+# 📡 Real-Time System
 
-- **OpenSky rate limit:** Anonymous requests are capped at ~100/hour. The backend caches for 30 seconds to stay within limits. Add credentials in `.env` for higher limits.
-- **Entity count:** Frontend caps at 6,000 aircraft entities to avoid GPU overload on Cesium. Increase `MAX_FLIGHTS` in `useFlightData.js` if your hardware supports it.
-- **Aircraft icon cache:** Canvas-rendered aircraft icons are cached by heading (rounded to nearest 5°) and color to avoid expensive re-renders.
-- **Lazy loading:** `CesiumGlobe` is dynamically imported to keep the initial bundle lean.
-
----
-
-## 🚢 Deployment
-
-### Frontend — Vercel / Netlify
-
-```bash
-cd frontend
-npm run build
-# → dist/ is your static output
-
-# Vercel
-vercel deploy --prod
-
-# Netlify
-netlify deploy --prod --dir=dist
-```
-
-Set environment variable `VITE_API_URL` to your production backend URL.
-
-### Backend — Railway / Render / Fly.io
-
-```bash
-cd backend
-# Deploy to Railway
-railway up
-
-# Or Render: connect GitHub repo, set build command to `npm install`, start to `npm start`
-```
-
-Set `FRONTEND_URL` to your production frontend URL in the platform's env settings.
-
-### Docker (Full Stack)
-
-```dockerfile
-# backend/Dockerfile
-FROM node:20-alpine
-WORKDIR /app
-COPY package*.json ./
-RUN npm ci --omit=dev
-COPY src/ ./src/
-EXPOSE 3001
-CMD ["node", "src/index.js"]
-```
+AeroSphere:
+- fetches live aircraft data
+- filters visible aircraft
+- updates aircraft trails
+- renders airport systems
+- updates flight positions
+- refreshes tracking continuously
 
 ---
 
-## 🛠️ Tech Stack
+# 🎨 UI Design
 
-| Layer | Technology |
-|-------|-----------|
-| Frontend framework | React 18 + Vite |
-| 3D Globe | CesiumJS 1.115 |
-| Animation | Framer Motion 11 + GSAP 3 |
-| Styling | Tailwind CSS 3 |
-| Icons | Lucide React |
-| HTTP client | Axios |
-| Backend | Node.js + Express 4 |
-| Caching | node-cache |
-| Rate limiting | express-rate-limit |
-| Flight data | OpenSky Network REST API |
+The interface uses:
+- Glassmorphism panels
+- Neon aviation aesthetics
+- HUD-inspired overlays
+- Dynamic information systems
+- Animated live visuals
 
 ---
 
-## 📄 License
+# 🧠 Current Capabilities
 
-MIT — free to use, modify, and deploy.
+✅ Live flight tracking  
+✅ Interactive airport system  
+✅ Smart flight search  
+✅ Aircraft suggestions  
+✅ Click-to-focus tracking  
+✅ Real-time information panels  
+✅ Flight route visualization  
+✅ Auto rotating globe  
+✅ Globe theme switching  
+✅ Mobile responsive panels  
 
 ---
 
-*Built with ❤️ and a passion for aviation.*
+# 🚧 Future Improvements
+
+- Live weather overlays
+- Radar systems
+- Flight history playback
+- Heatmap visualization
+- Military aircraft filtering
+- AI aviation analytics
+- Real-time weather radar
+- Satellite cloud rendering
+
+---
+
+# 📜 License
+
+MIT License
+
+Free to use, modify, and distribute.
+
+---
+
+# 👨‍💻 Developer
+
+Rahul Debnath
+
+---
+
+# 🌍 AeroSphere
+
+> “Track the skies in real time.”
