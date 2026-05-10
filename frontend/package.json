@@ -1,0 +1,32 @@
+{
+  "name": "aerosphere-frontend",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "axios": "^1.6.7",
+    "cesium": "^1.115.0",
+    "framer-motion": "^11.1.7",
+    "gsap": "^3.12.5",
+    "lucide-react": "^0.363.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-globe.gl": "^2.31.3",
+    "react-router-dom": "^7.15.0",
+    "three": "^0.169.0",
+    "three-globe": "^2.41.12",
+    "vite-plugin-cesium": "^1.2.22"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.2.1",
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.38",
+    "tailwindcss": "^3.4.3",
+    "vite": "^5.2.8"
+  }
+}

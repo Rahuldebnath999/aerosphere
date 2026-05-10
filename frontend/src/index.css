@@ -1,0 +1,284 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── ROOT DESIGN TOKENS ──────────────────────────────────────────────────── */
+:root {
+  --color-void:    #02060F;
+  --color-space:   #050D1F;
+  --color-nebula:  #091428;
+  --color-horizon: #0D1F3C;
+  --color-ion:     #00D4FF;
+  --color-plasma:  #00FFD1;
+  --color-stellar: #0066FF;
+  --color-corona:  #FF6B35;
+
+  --font-display: 'Orbitron', sans-serif;
+  --font-heading: 'Exo 2', sans-serif;
+  --font-body:    'Rajdhani', sans-serif;
+  --font-mono:    'Fira Code', monospace;
+
+  --glow-ion: 0 0 20px rgba(0,212,255,0.4), 0 0 60px rgba(0,212,255,0.15);
+  --glow-plasma: 0 0 20px rgba(0,255,209,0.4);
+  --shadow-glass: 0 8px 32px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.06);
+}
+
+/* ─── BASE RESET ──────────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--color-void);
+  color: #E8F4FF;
+  font-family: var(--font-body);
+  overflow-x: hidden;
+  cursor: default;
+}
+
+/* ─── SCROLLBAR ───────────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--color-void); }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--color-ion), var(--color-stellar));
+  border-radius: 2px;
+}
+
+/* ─── SELECTION ───────────────────────────────────────────────────────────── */
+::selection {
+  background: rgba(0, 212, 255, 0.25);
+  color: #fff;
+}
+
+/* ─── TYPOGRAPHY UTILITIES ────────────────────────────────────────────────── */
+.font-display { font-family: var(--font-display); }
+.font-heading { font-family: var(--font-heading); }
+.font-body    { font-family: var(--font-body); }
+.font-mono    { font-family: var(--font-mono); }
+
+/* ─── GLASS MORPHISM ──────────────────────────────────────────────────────── */
+.glass {
+  background: rgba(9, 20, 40, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(0, 212, 255, 0.12);
+  box-shadow: var(--shadow-glass);
+}
+
+.glass-dark {
+  background: rgba(2, 6, 15, 0.75);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(0, 212, 255, 0.08);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+}
+
+.glass-bright {
+  background: rgba(0, 212, 255, 0.06);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(0, 212, 255, 0.2);
+}
+
+/* ─── GLOW EFFECTS ────────────────────────────────────────────────────────── */
+.glow-ion    { box-shadow: var(--glow-ion); }
+.glow-plasma { box-shadow: var(--glow-plasma); }
+
+.text-glow-ion {
+  text-shadow: 0 0 20px rgba(0,212,255,0.8), 0 0 40px rgba(0,212,255,0.4);
+}
+
+.text-glow-plasma {
+  text-shadow: 0 0 20px rgba(0,255,209,0.8);
+}
+
+/* ─── GRADIENT TEXT ───────────────────────────────────────────────────────── */
+.gradient-text-ion {
+  background: linear-gradient(135deg, #00D4FF 0%, #00FFD1 50%, #0066FF 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  background-size: 200% auto;
+  animation: shimmerText 4s linear infinite;
+}
+
+@keyframes shimmerText {
+  0%   { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+/* ─── BORDER EFFECTS ──────────────────────────────────────────────────────── */
+.border-ion { border-color: var(--color-ion); }
+.border-glow-ion {
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  box-shadow: 0 0 10px rgba(0, 212, 255, 0.1), inset 0 0 10px rgba(0, 212, 255, 0.05);
+}
+
+/* ─── BUTTON STYLES ───────────────────────────────────────────────────────── */
+.btn-ion {
+  background: linear-gradient(135deg, #00D4FF, #0066FF);
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 0.85rem 2rem;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 20px rgba(0,212,255,0.3);
+}
+
+.btn-ion::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #00FFD1, #00D4FF);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.btn-ion:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 40px rgba(0,212,255,0.5);
+}
+
+.btn-ion:hover::before { opacity: 1; }
+.btn-ion span { position: relative; z-index: 1; }
+
+.btn-ghost {
+  background: transparent;
+  color: var(--color-ion);
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 0.85rem 2rem;
+  border-radius: 4px;
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-ghost:hover {
+  background: rgba(0, 212, 255, 0.1);
+  border-color: var(--color-ion);
+  box-shadow: 0 0 20px rgba(0,212,255,0.2);
+}
+
+/* ─── HUD ELEMENT STYLES ─────────────────────────────────────────────────── */
+.hud-value {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--color-ion);
+  letter-spacing: 0.05em;
+}
+
+.hud-label {
+  font-family: var(--font-display);
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+/* ─── RADAR SWEEP ─────────────────────────────────────────────────────────── */
+@keyframes radarSweep {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.radar-sweep {
+  animation: radarSweep 3s linear infinite;
+  transform-origin: 50% 50%;
+}
+
+/* ─── SCANNER LINE ────────────────────────────────────────────────────────── */
+.scan-overlay::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--color-ion), transparent);
+  animation: scanLine 4s linear infinite;
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+@keyframes scanLine {
+  0%   { top: -2px; opacity: 0; }
+  5%   { opacity: 0.4; }
+  95%  { opacity: 0.4; }
+  100% { top: 100%; opacity: 0; }
+}
+
+/* ─── PARTICLE CANVAS ─────────────────────────────────────────────────────── */
+.canvas-bg {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ─── CESIUM CONTAINER ────────────────────────────────────────────────────── */
+#cesium-container {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0;
+}
+
+/* Hide Cesium logo and attribution for cleaner UI (keep for production) */
+.cesium-widget-credits { display: none !important; }
+
+/* ─── STAT COUNTER ────────────────────────────────────────────────────────── */
+.stat-value {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 900;
+  line-height: 1;
+  background: linear-gradient(135deg, #00D4FF, #00FFD1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ─── SECTION DIVIDERS ────────────────────────────────────────────────────── */
+.divider-ion {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-ion), transparent);
+  opacity: 0.3;
+}
+
+/* ─── LOADING SCREEN ──────────────────────────────────────────────────────── */
+.loading-bar {
+  background: linear-gradient(90deg, transparent, var(--color-ion), var(--color-plasma), var(--color-ion), transparent);
+  background-size: 200% 100%;
+  animation: shimmerBar 1.5s linear infinite;
+}
+
+@keyframes shimmerBar {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* ─── RESPONSIVE UTILITIES ────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .hud-value { font-size: 0.75rem; }
+  .stat-value { font-size: 2rem; }
+}
